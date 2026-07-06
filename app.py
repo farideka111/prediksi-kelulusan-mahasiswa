@@ -102,13 +102,10 @@ input_data = pd.DataFrame([{
 
 if st.button("🔍 Prediksi Kelulusan"):
 
-    # Standardisasi data
     input_scaled = scaler.transform(input_data)
 
-    # Feature Selection
     input_selected = selector.transform(input_scaled)
 
-    # Prediksi
     hasil = model.predict(input_selected)
 
     st.divider()
@@ -129,7 +126,6 @@ Model yang digunakan adalah Support Vector Machine (SVM)
 dengan 10 fitur hasil Feature Selection menggunakan SelectKBest.
 """)
 
-    
     st.markdown("---")
 
 st.caption("""
