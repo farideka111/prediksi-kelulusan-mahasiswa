@@ -5,7 +5,7 @@ import joblib
 # Load model
 model = joblib.load("model_svm_kelulusan.joblib")
 scaler = joblib.load("scaler.joblib")
-selector = joblib.load("selector.joblib")
+# selector = joblib.load("selector.joblib")
 
 st.set_page_config(page_title="Prediksi Kelulusan Mahasiswa", layout="centered")
 
@@ -105,29 +105,20 @@ if st.button("🔍 Prediksi Kelulusan"):
     try:
         input_scaled = scaler.transform(input_data)
 
-        input_selected = selector.transform(input_scaled)
+        hasil = model.predict(input_scaled)
 
-        hasil = model.predict(input_selected)
+        
 
         st.divider()
         st.subheader("📊 Hasil Prediksi")
 
         if hasil[0] == 1:
             st.success("🎓 Mahasiswa Diprediksi LULUS")
-
-        elif hasil[0] == 0:
+        else:
             st.error("❌ Mahasiswa Diprediksi DROP OUT")
 
-        else:
-            st.warning("📚 Mahasiswa Diprediksi ENROLLED")
-
-        st.info("""
-Model yang digunakan adalah Support Vector Machine (SVM)
-dengan 10 fitur hasil Feature Selection menggunakan SelectKBest.
-""")
-
     except Exception as e:
-        st.error(str(e))
+        st.error(e)
 
 st.caption("""
 UAS Machine Learning
